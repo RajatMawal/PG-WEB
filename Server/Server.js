@@ -18,15 +18,14 @@
   app.use(express.json());
   app.use(express.urlencoded({ extended: true}));
 
+  const allowedOrigins = [
+  process.env.FRONTEND_URL,   
+  process.env.ORIGIN_URL      
+];
+
   const FRONTEND_URL = process.env.NODE_ENV === "production"
-  ? process.env.DOMAIN
+  ? process.env.FRONTEND_URL
   : "http://localhost:5173";
-
-
- const BACKEND_URL =
-  process.env.NODE_ENV === "production"
-    ? `${process.env.DOMAIN}/api`
-    : `http://localhost:${port}/api`;
 
  const GOOGLE_CALLBACK_URL =
   process.env.NODE_ENV === "production"
@@ -35,7 +34,7 @@
 
 
   app.use(cors({
-      origin: [FRONTEND_URL, "http://localhost:5173"], 
+      origin: allowedOrigins, 
       credentials: true,             
       methods: ["GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"], 
       allowedHeaders: ["Content-Type", "Authorization"]
