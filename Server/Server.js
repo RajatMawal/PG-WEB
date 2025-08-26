@@ -20,7 +20,7 @@
 
   const allowedOrigins = [
   process.env.FRONTEND_URL,   
-  process.env.ORIGIN_URL      
+  process.env.DOMAIN      
 ];
 
   const FRONTEND_URL = process.env.NODE_ENV === "production"
