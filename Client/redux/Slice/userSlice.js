@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { toast } from "react-toastify";
 
 const URL = import.meta.env.VITE_BACKEND_URL;
 
