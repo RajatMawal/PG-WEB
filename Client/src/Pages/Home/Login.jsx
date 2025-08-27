@@ -53,14 +53,13 @@ const handleSubmit = async (values) => {
 };
 
   const loginWithGoogle =()=>{
-    window.location.href = `${BACKEND_URL}/auth/google` // changed
+    window.location.href = `${BACKEND_URL}/auth/google` 
   }
 
 
   return (
     <div className="flex items-center justify-center  bg-gradient-to-br from-white via-[#f1fefc] to-[#d5f5f3] p-6 ">
       <div className="max-w-5xl w-full grid grid-cols-1 lg:grid-cols-2 rounded-3xl shadow-2xl overflow-hidden bg-white bg-opacity-20 backdrop-blur-md">
-        {/* Image Section */}
         <div className="hidden lg:block">
           <img
             src={loginImg}
@@ -87,7 +86,6 @@ const handleSubmit = async (values) => {
                   </p>
                 </div>
 
-                {/* Email */}
              <div>
                  <TextField
                   fullWidth
@@ -102,7 +100,6 @@ const handleSubmit = async (values) => {
                 />
 
              </div>
-                {/* Password */}
                 <div>
                   <TextField
                   fullWidth
@@ -126,7 +123,6 @@ const handleSubmit = async (values) => {
                 />
                 </div>
 
-                {/* Submit Button */}
                 <Button
                   fullWidth
                   type="submit"
@@ -145,7 +141,6 @@ const handleSubmit = async (values) => {
 
                 <Divider>OR</Divider>
 
-                {/* Google Auth Button */}
               <div className="py-4">
                   <Button
                   onClick={loginWithGoogle}

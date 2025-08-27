@@ -38,7 +38,7 @@ import TermsAndConditions from "./Pages/Home/Term&Conditions.jsx";
 
 const App = () => {
   const dispatch = useDispatch();
-  const { users, isAuthenticated, role, loading } = useSelector(
+  const { isAuthenticated, loading } = useSelector(
     (state) => state.user
   );
 

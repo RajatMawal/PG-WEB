@@ -6,7 +6,7 @@ import {Loader} from "../../Components/Utils/Loader.jsx"
 
 const Protected = () => {
   const navigate = useNavigate();
-  const { loading, isAuthenticated, role } = useSelector((state) => state.user);
+  const { loading, isAuthenticated} = useSelector((state) => state.user);
 
 
   useEffect(() => {

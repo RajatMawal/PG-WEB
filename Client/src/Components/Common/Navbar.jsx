@@ -13,18 +13,21 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
-
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { loading, role } = useSelector((state) => state.user);
+
+  const { loading, users, role } = useSelector((state) => state.user);
+  const userRole = users?.role || role; 
 
   useEffect(() => {
-    const onScroll = () => {
-      setScrolled(window.scrollY > 10);
-    };
+    dispatch(getAccess());
+  }, [dispatch]);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 10);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
 
   const navItems = [
     { link: "/", type: "Home" },
@@ -37,25 +40,22 @@ const Navbar = () => {
     { link: "/admin", type: "Dashboard" },
     { link: "/admin/add-Property", type: "Add Property" },
     { link: "/admin/manage-Users", type: "Manage Users" },
-  ]
-
-
+  ];
 
   const handleToggle = () => setIsOpen(!isOpen);
   const handleClose = () => setIsOpen(false);
 
-  const navigate = useNavigate();
-  const handleLogout = async() => {
+  const handleLogout = async () => {
     try {
-    const result = await dispatch(logoutUser()).unwrap();
-    toast.success(result.message || "Logout Successfully")
-    navigate("/login");
+      const result = await dispatch(logoutUser()).unwrap();
+      toast.success(result.message || "Logout Successfully");
+      navigate("/login");
     } catch (error) {
-    toast.error(error.message)
+      toast.error(error.message || "Failed to logout");
     }
   };
 
-  if(loading) <Loader/>
+  if (loading) return <Loader />;
 
   return (
     <>
@@ -74,7 +74,6 @@ const Navbar = () => {
           <img src={logo} alt="Logo" className="object-cover w-full h-full" />
         </NavLink>
 
-        
         <ul className="hidden lg:flex lg:items-center lg:space-x-6">
           {navItems.map((item, i) => (
             <li key={i}>
@@ -92,15 +91,11 @@ const Navbar = () => {
               </NavLink>
             </li>
           ))}
-
-         
         </ul>
-
-       
 
         {/* Desktop Buttons */}
         <div className="hidden lg:flex gap-2">
-          {role ? null : (
+          {!userRole && (
             <>
               <NavLink
                 to="/login"
@@ -117,16 +112,16 @@ const Navbar = () => {
             </>
           )}
 
-          {role === "admin" ? (
+          {userRole === "admin" && (
             <NavLink
               to="/admin"
               className="pt-1 cursor-pointer text-white bg-slate-800 px-2 rounded-md hover:bg-slate-700 hover:transition-transform ease-in-out duration-300"
             >
               <h1>Admin</h1>
             </NavLink>
-          ) : null}
+          )}
 
-          {role ? (
+          {userRole && (
             <>
               <button
                 onClick={handleLogout}
@@ -138,8 +133,6 @@ const Navbar = () => {
                 <MdOutlineAccountCircle className="text-4xl" />
               </NavLink>
             </>
-          ) : (
-            ""
           )}
         </div>
 
@@ -151,22 +144,22 @@ const Navbar = () => {
         </div>
       </nav>
 
-   
-
+      {/* Overlay */}
       <div
-        className={`fixed inset-0 bg-black/50 bg-opacity-40 z-40 transition-opacity duration-300  ${
+        className={`fixed inset-0 bg-black/50 bg-opacity-40 z-40 transition-opacity duration-300 ${
           isOpen ? "opacity-100 visible " : "opacity-0 invisible"
         }`}
         onClick={handleClose}
       />
 
+      {/* Mobile Sidebar */}
       <div
         className={`fixed left-0 top-0 z-50 h-full w-64 bg-white/90 backdrop-blur-lg shadow-xl transform transition-transform duration-300 flex flex-col justify-between pb-7 ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
         <div className="px-2">
-          <div className="py-4  flex justify-between items-center border-b-2 border-slate-400 ">
+          <div className="py-4 flex justify-between items-center border-b-2 border-slate-400">
             <img src={logo} alt="Logo" className="h-10 w-auto" />
             <button
               onClick={handleClose}
@@ -193,37 +186,33 @@ const Navbar = () => {
               </li>
             ))}
           </ul>
-           <ul className="block px-6 md:hidden">
-          
-         {
-            role === "admin" && <div className="text-white bg-[#17313E] px-4 py-2 rounded-lg mb-4">
-              <h1 className="py-2">Admin Options</h1>
-                {
-                            adminNavItems.map((item, i) => (
-              <li key={i}>
-                <NavLink
-                  to={item.link}
-                  className={({ isActive }) =>
-                    `text-sm font-semibold transition-colors ${
-                      isActive
-                        ? "text-[#03A6A1]"
-                        : "text-white hover:text-[#03A6A1]"
-                    }`
-                  }
-                >
-                  {item.type}
-                </NavLink>
-              </li>
-            ))
-                }
-            </div>
 
-          }
-        </ul>
+          {userRole === "admin" && (
+            <div className="text-white bg-[#17313E] px-4 py-2 rounded-lg mb-4">
+              <h1 className="py-2">Admin Options</h1>
+              {adminNavItems.map((item, i) => (
+                <li key={i}>
+                  <NavLink
+                    to={item.link}
+                    className={({ isActive }) =>
+                      `text-sm font-semibold transition-colors ${
+                        isActive
+                          ? "text-[#03A6A1]"
+                          : "text-white hover:text-[#03A6A1]"
+                      }`
+                    }
+                  >
+                    {item.type}
+                  </NavLink>
+                </li>
+              ))}
+            </div>
+          )}
         </div>
 
-        <div className="">
-          {role ? null : (
+        {/* Mobile Buttons */}
+        <div className="px-6 mb-4">
+          {!userRole && (
             <div className="flex flex-col gap-2">
               <NavLink
                 to="/login"
@@ -240,15 +229,12 @@ const Navbar = () => {
             </div>
           )}
 
-          {role === "admin" ? (
-            <div className="flex flex-col gap-2 mx-2">
+          {userRole && (
+            <div className="flex flex-col gap-2">
               <NavLink
-                to="/admin"
-                className="p-2  text-center  cursor-pointer text-white bg-slate-800 px-2 rounded-md hover:bg-slate-700 hover:transition-transform ease-in-out duration-300"
+                to="/account"
+                className="py-2 px-6 bg-slate-300 text-sm text-center font-semibold text-gray-800 rounded-md cursor-pointer hover:bg-gray-200"
               >
-                Admin
-              </NavLink>
-               <NavLink to="/account" className=" py-2 px-6 bg-slate-300 text-sm text-center font-semibold text-gray-800 rounded-md cursor-pointer hover:bg-gray-200">
                 Profile
               </NavLink>
               <button
@@ -257,27 +243,11 @@ const Navbar = () => {
               >
                 Logout
               </button>
-              
             </div>
-          ) : role === "user" || role === "pg-owner" ? (
-            <div className="flex flex-col gap-2 mx-2">
-             
-              <NavLink to="/account" className=" py-2 px-6 bg-slate-300 text-sm text-center font-semibold text-gray-800 rounded-md cursor-pointer hover:bg-gray-200">
-                Profile
-              </NavLink>
-               <button
-                onClick={handleLogout}
-                className=" py-2 px-6 bg-gray-100 text-sm font-semibold text-gray-800 rounded-md cursor-pointer hover:bg-gray-200"
-              >
-                Logout
-              </button>
-            </div>
-          ) : (
-            null
           )}
-        <p className="text-xs text-center text-gray-600 mt-4">&copy; 2025</p>
-        </div>
 
+          <p className="text-xs text-center text-gray-600 mt-4">&copy; 2025</p>
+        </div>
       </div>
     </>
   );
