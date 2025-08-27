@@ -20,7 +20,8 @@
 
   const allowedOrigins = [
   process.env.FRONTEND_URL,   
-  process.env.DOMAIN      
+  process.env.DOMAIN,
+  "http://localhost:5173"     
 ];
 
   const FRONTEND_URL = process.env.NODE_ENV === "production"
@@ -34,7 +35,13 @@
 
 
   app.use(cors({
-      origin: allowedOrigins, 
+      origin:(origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  }, 
       credentials: true,             
       methods: ["GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"], 
       allowedHeaders: ["Content-Type", "Authorization"]
