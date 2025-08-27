@@ -214,9 +214,9 @@ const userSlice = createSlice({
       })
       .addCase(getAccess.fulfilled, (state, action) => {
         state.loading = false;
-        state.users = action.payload.user;
-        state.isAuthenticated = action.payload.isAuthenticated;
-        state.role = action.payload.user.role; 
+        state.users = action.payload?.user || null;
+        state.isAuthenticated = action.payload?.isAuthenticated ?? null;
+        state.role = action.payload?.user?.role || null; 
       })
       .addCase(getAccess.rejected, (state, action) => {
         state.loading = false;
