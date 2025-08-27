@@ -10,7 +10,6 @@ import About from "./Pages/Home/About.jsx";
 import Login from "./Pages/Home/Login.jsx";
 import Register from "./Pages/Home/Register.jsx";
 import Account from "./Pages/User/Account.jsx";
-import UpdateInformation from "./Pages/User/UpdateInformation.jsx";
 import AddProperty from "./Pages/Home/AddProperty.jsx";
 import ForgotPassword from "./Pages/Home/ForgotPassword.jsx";
 import OtpVerify from "./Pages/Home/OtpVerify.jsx";
@@ -87,7 +86,6 @@ useEffect(() => {
           <Route path="registerOtp" element={<SendRegisterOtp />} />
           <Route path="register" element={<ProtectedRegister><Register /></ProtectedRegister>} />
           <Route path="account" element={<Account />} />
-          <Route path="update-information" element={<UpdateInformation />} />
           <Route path="add-property" element={<AddProperty />} />
           <Route path="all-PG" element={<AllPg />} />
         </Route>
