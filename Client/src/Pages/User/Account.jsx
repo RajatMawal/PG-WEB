@@ -1,4 +1,4 @@
-import { FaUser, FaEnvelope, FaPhone, FaBirthdayCake, FaMapMarkerAlt, FaUserTag, FaCalendarAlt } from "react-icons/fa";
+import { FaUser, FaEnvelope, FaPhone, FaCalendarAlt } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import { logoutUser } from "../../../redux/Slice/userSlice";
