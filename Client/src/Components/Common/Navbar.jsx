@@ -19,9 +19,10 @@ const Navbar = () => {
   const { loading, users, role } = useSelector((state) => state.user);
   const userRole = users?.role || role; 
 
-  useEffect(() => {
-    dispatch(getAccess());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(getAccess());
+  // }, [dispatch]);
+  
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);

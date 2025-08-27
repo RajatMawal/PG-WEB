@@ -27,7 +27,7 @@ export const allProperty = createAsyncThunk("/allProperty",
       const response = await axios.get(`${BASE_URL}/api/property`)
       return response.data
     } catch (error) {
-      return thunkApi.rejectWithValue(error)
+      return thunkApi.rejectWithValue(error.response.data.message || "somtheing went wrong")
     }
   }
 )
@@ -37,7 +37,7 @@ export const deleteProperty = createAsyncThunk("/deleteProperty",async(id,thunkA
     const response = await axios.delete(`${BASE_URL}/api/property/delete-property/${id}`,{withCredentials:true})
     return response.data
   } catch (error) {
-    return thunkApi.rejectWithValue(error)
+    return thunkApi.rejectWithValue(error.response.data.message)
   }
 })
 

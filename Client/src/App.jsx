@@ -50,8 +50,17 @@ const App = () => {
 
 
 useEffect(() => {
-    dispatch(getAccess()).unwrap();
-}, []);
+  dispatch(getAccess())
+    .unwrap()
+    .catch((err) => {
+      if (err === "Unauthorized") {
+        console.log("Not logged in, staying on public routes");
+      } else {
+        console.error("Error fetching access:", err);
+      }
+    });
+}, [dispatch]);
+
 
 
   if (loading) {
