@@ -12,6 +12,11 @@ export const addProperty = async (req, res, next) => {
     console.log("req._id:", req._id);
 console.log("req.files:", req.files);
 console.log("req.body:", req.body);
+console.log(images)
+console.log(req.body.Sharing)
+console.log(req.body.CommonFacilities)
+console.log(req.body.Safety)
+console.log(req.body.BillsIncluded)
 
     const createdBy = await User.findById(userId)
 

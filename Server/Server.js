@@ -11,6 +11,7 @@
   import { errorhandler } from "./Middleware/errorHandler.js";
   import propertyRoute from "./Routes/propertyRoute.js";
   import otpRouter from "./Routes/otpRoute.js";
+import MongoStore from "connect-mongo";
 
   const app = express();
 
@@ -18,27 +19,30 @@
   app.use(express.json());
   app.use(express.urlencoded({ extended: true}));
 
-  const allowedOrigins = [
-  process.env.FRONTEND_URL,   
-  process.env.DOMAIN,
-  "http://localhost:5173"     
-];
+
 
   const FRONTEND_URL = process.env.NODE_ENV === "production"
   ? process.env.FRONTEND_URL
   : "http://localhost:5173";
+
+  const allowedOrigins = [FRONTEND_URL];
+ 
 
  const GOOGLE_CALLBACK_URL =
   process.env.NODE_ENV === "production"
     ? `${process.env.DOMAIN}/auth/google/callback`
     : `http://localhost:${port}/auth/google/callback`;
 
+  console.log("GOOGLE_CALLBACK_URL:", GOOGLE_CALLBACK_URL);
+
+  app.set("trust proxy", 1); 
 
   app.use(cors({
       origin:(origin, callback) => {
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
+      console.log("Blocked by CORS:", origin); // Debug
       callback(new Error("Not allowed by CORS"));
     }
   }, 
@@ -47,19 +51,22 @@
       allowedHeaders: ["Content-Type", "Authorization"]
   }));
 
+
   app.use(cookieParser())
 
-app.use(
+  app.use(
   session({
     secret: "secret",
     resave: false,
     saveUninitialized: true,
+    store: MongoStore.create({ mongoUrl: process.env.MONGODB_URI }),
     cookie: {
       secure: process.env.NODE_ENV === "production", 
       sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
     },
   })
 );
+
 
 
   app.use(passport.initialize());
@@ -133,4 +140,3 @@ app.use(
   app.listen(port, () => {
     console.log(`http://localhost:${port}`);
   });
-// export default app;
