@@ -21,13 +21,13 @@ export const sendOtp = async (req, res, next) => {
     }
 
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
-    const expiry_time = new Date(Date.now() + 2 * 60 * 1000); 
+    const expiry_time = new Date(Date.now() + 4 * 60 * 1000); 
 
 
     const data = { email, otp };
 
     if (isEmail) {
-      verifyEmailOtp(data);
+      await verifyEmailOtp(data);
     }
 
     if (otpUser) {
