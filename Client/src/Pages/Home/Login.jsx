@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { useState } from "react";
 import loginImg from "../../assets/login.webp";
 import * as yup from "yup";
 import { Formik, Form } from "formik";
@@ -14,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getAccess, userLogin } from "../../../redux/Slice/userSlice";
 import { toast } from "react-toastify";
+import { Helmet } from "react-helmet-async";
 
 
 const Login = () => {
@@ -58,7 +58,16 @@ const handleSubmit = async (values) => {
 
 
   return (
-    <div className="flex items-center justify-center  bg-gradient-to-br from-white via-[#f1fefc] to-[#d5f5f3] p-6 ">
+    <>
+      <Helmet>
+        <title>Login | Pribhumnest</title>
+        <meta
+          name="description"
+          content="Login to your Pribhumnest account to manage your PG listings, enquiries, and profile."
+        />
+        <link rel="canonical" href="https://www.pribhumnest.in/login" />
+      </Helmet>
+       <div className="flex items-center justify-center  bg-gradient-to-br from-white via-[#f1fefc] to-[#d5f5f3] p-6 ">
       <div className="max-w-5xl w-full grid grid-cols-1 lg:grid-cols-2 rounded-3xl shadow-2xl overflow-hidden bg-white bg-opacity-20 backdrop-blur-md">
         <div className="hidden lg:block">
           <img
@@ -171,6 +180,7 @@ const handleSubmit = async (values) => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

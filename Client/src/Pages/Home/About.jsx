@@ -1,8 +1,17 @@
 import React from "react";
+import { Helmet } from "react-helmet-async";
 import { FaHandshake, FaHome, FaUserFriends, FaShieldAlt, FaMoneyBillWave } from "react-icons/fa";
 
 const About = () => {
   return (
+    <>
+    <Helmet>
+      <title>About us | Pribhumnest</title>
+      <link rel="canonical" href="https://pribhumnest.in/about" />
+      <meta 
+      name="description"
+          content="Pribhumnest provides secure and easy PG management. Property owners can add, update, and manage PGs, while tenants can browse verified listings effortlessly."/>
+    </Helmet>
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-teal-50 to-blue-50 px-6 py-16 text-gray-800">
       <div className="max-w-6xl mx-auto space-y-16">
         {/* Title Section */}
@@ -114,6 +123,8 @@ const About = () => {
         </div>
       </div>
     </div>
+    </>
+    
   );
 };
 

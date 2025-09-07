@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { otpVerify } from "../../../redux/Slice/userSlice";
 import { toast } from "react-toastify";
 import { useLocation, useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 const OtpVerify = () => {
   const initialState = {
@@ -55,7 +56,8 @@ const OtpVerify = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-white via-[#f1fefc] to-[#d5f5f3] p-4">
+    <>
+     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-white via-[#f1fefc] to-[#d5f5f3] p-4">
       <Formik initialValues={initialState} validationSchema={validationSchema} onSubmit={handleSubmit}>
         {({ handleBlur, values, errors, touched, setFieldValue }) => (
           <Form className="w-full max-w-md sm:max-w-lg bg-white p-6 sm:p-10 rounded-xl shadow-md flex flex-col gap-6">
@@ -127,6 +129,7 @@ const OtpVerify = () => {
         )}
       </Formik>
     </div>
+    </>
   );
 };
 

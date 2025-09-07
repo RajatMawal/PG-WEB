@@ -1,7 +1,17 @@
+import { Helmet } from "react-helmet-async";
 import { FaPhoneAlt, FaMapMarkerAlt, FaEnvelopeOpenText } from "react-icons/fa";
 
 const ContactForm = () => {
   return (
+    <>
+    <Helmet>
+      <title>Contact Us | Pribhumnest</title>
+      <link rel="canonical" href="https://pribhumnest.in/contact" />
+      <meta
+          name="description"
+          content="Pribhumnest provides secure and easy PG management.while tenants can browse verified listings effortlessly."
+      />
+    </Helmet>
     <section className="relative bg-gradient-to-br from-teal-50 to-blue-50 py-20 px-6 overflow-hidden mt-10">
       <div className="absolute top-0 left-0 w-full overflow-hidden -mt-24">
         <svg viewBox="0 0 500 150" preserveAspectRatio="none" className="w-full h-24">
@@ -47,6 +57,7 @@ const ContactForm = () => {
         </div>
       </div>
     </section>
+    </>
   );
 };
 
