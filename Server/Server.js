@@ -118,6 +118,9 @@ import MongoStore from "connect-mongo";
 
   app.use('/uploads', express.static('uploads'));
 
+    console.log(GOOGLE_CALLBACK_URL)
+console.log(FRONTEND_URL)
+
 
   app.get("/",(req,res)=>{
     res.send("hello world")
@@ -139,4 +142,9 @@ import MongoStore from "connect-mongo";
 
   app.listen(port, () => {
     console.log(`http://localhost:${port}`);
+<<<<<<< Updated upstream
   });
+=======
+  });
+// export default app;
+>>>>>>> Stashed changes

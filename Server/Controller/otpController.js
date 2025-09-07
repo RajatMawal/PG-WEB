@@ -27,7 +27,12 @@ export const sendOtp = async (req, res, next) => {
     const data = { email, otp };
 
     if (isEmail) {
+<<<<<<< Updated upstream
       await verifyEmailOtp(data);
+=======
+      const sent = await verifyEmailOtp(data);
+      if(!sent.success) return next(sent.error)
+>>>>>>> Stashed changes
     }
 
     if (otpUser) {
