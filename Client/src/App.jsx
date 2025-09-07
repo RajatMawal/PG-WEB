@@ -33,6 +33,7 @@ import { ProtectedRegister } from "./Pages/Admin/ProtectedRegister.jsx";
 import AuthRedirect from "./Components/Utils/AuthRedirect.jsx";
 import PrivacyPolicy from "./Pages/Home/PrivacyPolicy.jsx";
 import TermsAndConditions from "./Pages/Home/Term&Conditions.jsx";
+import Services from "./Pages/Home/Services.jsx";
 
 
 const App = () => {
@@ -79,6 +80,7 @@ useEffect(() => {
           <Route path="about" element={<About />} />
           <Route path="privacyPolicy" element={<PrivacyPolicy/>} />
           <Route path="termConditions" element={<TermsAndConditions/>} />
+          <Route path="/services" element={<Services/>}/>
           <Route
             path="login"
             element={<LoginRedirect isAuthenticated={isAuthenticated} />}

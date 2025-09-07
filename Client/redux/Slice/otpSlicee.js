@@ -23,6 +23,7 @@ export const verifyOtp = createAsyncThunk(
       const response = await axios.post(`${BASE_URL}/api/otp/verify-otp`, { email, otp });
       return response.data;
     } catch (error) {
+      console.log(error)
       return thunkAPI.rejectWithValue(error.response?.data || { message: "Invalid OTP" });
     }
   }

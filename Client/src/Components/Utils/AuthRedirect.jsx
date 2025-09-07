@@ -5,12 +5,12 @@ const AuthRedirect = ( {isAuthenticated} ) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-   const excludedPaths = ["/login", "/register", "/registerOtp", "/login/forgotPassword", "/login/forgotPassword/otp-verify"];
+   const excludedPaths = ["/login", "/register", "/registerOtp", "/login/forgotPassword", "/login/forgotPassword/otp-verify","/login/forgotPassword/otp-verify/update-password"];
   useEffect(() => {
     if (!isAuthenticated && !excludedPaths.includes(location.pathname)) {
       const timer = setTimeout(() => {
         navigate("/login");
-      }, 10000); 
+      }, 120000); 
 
       return () => clearTimeout(timer);
     }

@@ -1,15 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import details from "../../assets/magnify.gif"
-import security from "../../assets/security.gif"
+import details from "../../assets/magnify.gif";
+import security from "../../assets/security.gif";
 import { Button, TextField } from "@mui/material";
 import { toast } from "react-toastify";
 import { VscArrowLeft } from "react-icons/vsc";
 import { sendOtp, verifyOtp } from "../../../redux/Slice/otpSlicee.js";
+import { Helmet } from "react-helmet-async";
 
-
-const SendRegisterOtp= () => {
+const SendRegisterOtp = () => {
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [showOtpField, setShowOtpField] = useState(false);
@@ -51,7 +51,9 @@ const SendRegisterOtp= () => {
         toast.success(result.message || "OTP sent to your email");
       } else {
         const otpValue = otp.join("");
-        const result = await dispatch(verifyOtp({ email, otp: otpValue })).unwrap();
+        const result = await dispatch(
+          verifyOtp({ email, otp: otpValue })
+        ).unwrap();
 
         if (result?.token) {
           localStorage.setItem("token", result.token);
@@ -65,74 +67,85 @@ const SendRegisterOtp= () => {
   };
 
   return (
-    <div className="flex justify-center bg-gradient-to-br from-white via-[#f1fefc] to-[#d5f5f3] p-4 min-h-screen items-center">
-      <form
-        onSubmit={handleSubmit}
-        className="w-full max-w-md bg-white p-6 sm:p-8 rounded-xl shadow-md flex flex-col gap-6"
-      >
-        <div className="w-full flex justify-center">
-          <img
-            src={!showOtpField ? details : security}
-            alt=""
-            className="h-30 w-30"
-          />
-        </div>
-        <h2 className="text-2xl sm:text-3xl font-semibold text-center text-gray-700">
-          Verify Your Email
-        </h2>
-
-        {!showOtpField ? (
-          <TextField
-            label="Enter Your Email"
-            onChange={handleEmailChange}
-            value={email}
-            type="email"
-            variant="outlined"
-            fullWidth
-            required
-          />
-        ) : (
-          <div className="flex justify-between gap-2 sm:gap-3">
-            {otp.map((value, idx) => (
-              <input
-                key={idx}
-                ref={(el) => (inputRefs.current[idx] = el)}
-                onChange={(e) => handleOtpChange(e, idx)}
-                value={value}
-                maxLength={1}
-                type="text"
-                pattern="[0-9]*"
-                required
-                className="w-12 sm:w-14 h-12 sm:h-14 text-center border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#03A6A1] text-lg sm:text-xl"
-              />
-            ))}
-          </div>
-        )}
-
-        <Button
-          type="submit"
-          variant="contained"
-          fullWidth
-          sx={{
-            backgroundColor: "#0ABAB5",
-            "&:hover": { backgroundColor: "#099a94" },
-            py: 1.5,
-          }}
+    <>
+      <Helmet>
+        <title>Register | Pribhumnest</title>
+        <meta
+          name="description"
+          content="Register your Pribhumnest account to manage your PG listings, enquiries, and profile."
+        />
+        <link rel="canonical" href="https://www.pribhumnest.in/login" />
+      </Helmet>
+      <div className="flex justify-center bg-gradient-to-br from-white via-[#f1fefc] to-[#d5f5f3] p-4 min-h-screen items-center">
+        <form
+          onSubmit={handleSubmit}
+          className="w-full max-w-md bg-white p-6 sm:p-8 rounded-xl shadow-md flex flex-col gap-6"
         >
-          {showOtpField ? "Verify OTP" : "Continue"}
-        </Button>
+          <div className="w-full flex justify-center">
+            <img
+              src={!showOtpField ? details : security}
+              alt=""
+              className="h-30 w-30"
+            />
+          </div>
+          <h2 className="text-2xl sm:text-3xl font-semibold text-center text-gray-700">
+            Verify Your Email
+          </h2>
 
-        {showOtpField && (
+          {!showOtpField ? (
+            <TextField
+              label="Enter Your Email"
+              onChange={handleEmailChange}
+              value={email}
+              type="email"
+              variant="outlined"
+              fullWidth
+              required
+            />
+          ) : (
+            <div className="flex justify-between gap-2 sm:gap-3">
+              {otp.map((value, idx) => (
+                <input
+                  key={idx}
+                  ref={(el) => (inputRefs.current[idx] = el)}
+                  onChange={(e) => handleOtpChange(e, idx)}
+                  value={value}
+                  maxLength={1}
+                  type="text"
+                  pattern="[0-9]*"
+                  required
+                  className="w-12 sm:w-14 h-12 sm:h-14 text-center border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#03A6A1] text-lg sm:text-xl"
+                />
+              ))}
+            </div>
+          )}
+
           <Button
-            onClick={() => setShowOtpField(false)}
-            className="flex items-center justify-center gap-1 text-gray-500 hover:text-gray-700 transition-colors"
+            type="submit"
+            variant="contained"
+            fullWidth
+            sx={{
+              backgroundColor: "#0ABAB5",
+              "&:hover": { backgroundColor: "#099a94" },
+              py: 1.5,
+            }}
           >
-            <VscArrowLeft /> 
+            {showOtpField ? "Verify OTP" : "Continue"}
           </Button>
-        )}
-      </form>
-    </div>
+
+          {showOtpField && (
+            <Button
+              type="submit"
+              onClick={() => setShowOtpField(false)}
+              className="flex items-center justify-center gap-1 text-gray-500 hover:text-gray-700 transition-colors"
+            >
+              <VscArrowLeft />
+            </Button>
+          )}
+        </form>
+      </div>
+    </>
   );
 };
 
-export default SendRegisterOtp
+export default SendRegisterOtp;

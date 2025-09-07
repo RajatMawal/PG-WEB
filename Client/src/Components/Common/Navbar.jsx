@@ -35,6 +35,7 @@ const Navbar = () => {
     { link: "/about", type: "About Us" },
     { link: "/all-PG", type: "PG" },
     { link: "/contact", type: "Contact" },
+    { link: "/services", type: "Services" }
   ];
 
   const adminNavItems = [

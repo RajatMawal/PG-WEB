@@ -4,6 +4,7 @@ import { allProperty } from "../../../redux/Slice/propertySlice";
 import { BiSearch } from "react-icons/bi";
 import CardFilter from "../../Components/Utils/CardFilter.jsx";
 import { useLocation } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 const AllPg = () => {
   const { property } = useSelector((state) => state.property);
@@ -50,6 +51,15 @@ const AllPg = () => {
   };
 
   return (
+    <>
+    <Helmet>
+      <title>All Pg | Pribhumnest</title>
+      <link rel="canonical" href="https://pribhumnest.in/all-PG" />
+          <meta
+          name="description"
+          content="Pribhumnest provides secure and easy PG management. Property owners can add, update, and manage PGs, while tenants can browse verified listings effortlessly."
+        />
+    </Helmet>
     <div className="min-h-screen px-4 py-8 md:px-10 bg-[#f8fafc] mt-15">
       <h1 className="text-2xl font-bold text-center text-[#2C3E50] mb-6 ">
             Find Your Perfect PG
@@ -136,6 +146,7 @@ const AllPg = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

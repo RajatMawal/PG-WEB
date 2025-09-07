@@ -130,7 +130,7 @@ const AddProperty = () => {
 
     try {
       const result = await dispatch(addProperty(formData))
-      toast.success(result.messsage || "Property Added Successfully")
+      toast.success(result.message || "Property Added Successfully")
       resetForm({ values: initialState });
     } catch (error) {
       toast.error(error)

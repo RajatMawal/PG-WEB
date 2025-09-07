@@ -8,6 +8,7 @@ import { IoChevronBack , IoChevronForward } from "react-icons/io5";
 import {useDispatch, useSelector} from "react-redux"
 import { allProperty } from "../../../redux/Slice/propertySlice";
 import noImg from "../../assets/NoImage.png"
+import { Helmet } from "react-helmet-async";
 
 
 const PgDetails = () => {
@@ -20,6 +21,9 @@ const PgDetails = () => {
   const dispatch = useDispatch()
 
   const id = location.pathname.replace("pg-details", "").replace(/\//g, "")
+
+    const baseUrl = "https://www.pribhumnest.in";
+  const canonicalUrl = `${baseUrl}${location.pathname}`;
 
 
 
@@ -108,6 +112,14 @@ const PgDetails = () => {
 
   return (
 <>
+<Helmet>
+  <title>Pg for Rent in {filterDetails?.Locality}</title>
+  <link rel="canonical" href={canonicalUrl} />
+  <meta
+    name="description"
+    content={`Find the best PGs for rent in ${filterDetails?.Locality}. Affordable, verified, and comfortable stays at Pribhumnest.`}
+  />
+</Helmet>
     <div className="min-h-screen bg-gradient-to-br from-[#e0f7fa] to-[#e8f5e9] mt-13 py-3 px-3">
   <div className="max-w-[1300px] px-2 md:px-10  mx-auto grid lg:grid-cols-3 gap-10 bg-white bg-opacity-80 backdrop-blur-xl p-8 rounded-3xl shadow-2xl animate-fade-in">
 
@@ -191,7 +203,6 @@ const PgDetails = () => {
 
     </div>
 
-    {/* RIGHT SECTION */}
     <div className="lg:col-span-1 space-y-6 lg:sticky lg:top-28 relative">
       <RentDetails  sharingRent={sharing}/>
       <BookingForm />
@@ -199,7 +210,6 @@ const PgDetails = () => {
 
   </div>
 
-  {/* Fullscreen image focus */}
   {!isFocus && (
     <div className="fixed inset-0 z-50 bg-black/90 flex flex-col items-center justify-center p-4">
       <div className="self-end cursor-pointer" onClick={() => setIsFocus(true)}>

@@ -11,8 +11,8 @@ export const addProperty = createAsyncThunk(
       const response = await axios.post(
         `${BASE_URL}/api/property/add-property`,
         formData, 
-        {withCredentials:true},
-        { headers: { "Content-Type": "multipart/form-data" } }
+        { withCredentials:true,
+          headers: { "Content-Type": "multipart/form-data" } }
       );
       return response.data;
     } catch (error) {
